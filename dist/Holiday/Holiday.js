@@ -13,7 +13,7 @@ exports.fetchHoliday = void 0;
 const Holiday_Utils_1 = require("./Holiday_Utils");
 const fetchHoliday = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { year } = req.body;
+        const { year } = req.body.body;
         const holidayList = yield Holiday_Utils_1.getHoliday(year);
         res.send({ holidayList });
     }

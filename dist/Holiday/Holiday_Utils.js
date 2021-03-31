@@ -19,7 +19,9 @@ const apis = {
     Enecoding: `Do%2BqAYkzRDsfuWpJN8MRsmQIXjK06hUAMvVReJqqT1MvyKvc%2Ft9eFJU19fHpZZ9j88%2BVYi9AgtBVgibkdVwhXA%3D%3D`
 };
 const getHoliday = (year) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(year);
     const response = yield (yield node_fetch_1.default(`${apis.EndPoint}?serviceKey=${apis.Enecoding}&solYear=${year}&_type=json`)).json();
+    console.log(response);
     return yield response.response.body.items;
 });
 exports.getHoliday = getHoliday;

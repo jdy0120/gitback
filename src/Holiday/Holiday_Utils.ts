@@ -6,6 +6,8 @@ const apis = {
 }
 
 export const getHoliday = async(year:string) => {
+  console.log(year)
   const response = await (await fetch(`${apis.EndPoint}?serviceKey=${apis.Enecoding}&solYear=${year}&_type=json`)).json();
+  console.log(response)
   return await response.response.body.items;
 }
