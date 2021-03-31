@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-/node_modules
-=======
 # Logs
 logs
 *.log
@@ -67,4 +64,3 @@ node_modules/
 
 # dotenv environment variables file
 .env
->>>>>>> ea337a7 (gitback firebase)
