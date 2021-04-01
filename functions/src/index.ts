@@ -5,14 +5,13 @@ import * as functions from "firebase-functions";
 import { fetchHoliday } from './Holiday/Holiday';
 
 const app = express();
-const main = express();
 
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.post('/', fetchHoliday);
 
-main.use(cors());
-main.use(bodyParser.json());
-main.use(bodyParser.urlencoded({ extended: false }));
-main.use('/fetchHoliday',app);
+export const getHoliday = functions.https.onRequest(app);
 
 // // Start writing Firebase Functions
 // // https://firebase.google.com/docs/functions/typescript
@@ -22,5 +21,3 @@ export const helloWorld = functions.https.onRequest((request, response) => {
   functions.logger.info("Hello logs!", {structuredData: true});
   response.send("Hello from Firebase!");
 });
-
-export const getHoliday = functions.https.onRequest(main);
