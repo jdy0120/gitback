@@ -4,7 +4,7 @@ import * as cors from 'cors';
 import * as express from 'express';
 
 import { fetchHoliday } from './Holiday/Holiday';
-import { fetchMyFriends } from './MyFriends/MyFriends';
+import { fetchMyFriends,insertFriend } from './MyFriends/MyFriends';
 // // Start writing Firebase Functions
 // // https://firebase.google.com/docs/functions/typescript
 //
@@ -16,6 +16,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.post('/', fetchHoliday);
 app.get('/Friends', fetchMyFriends);
+app.post('/insertFriend', insertFriend);
 
 export const getDatas = functions.https.onRequest(app);
 
