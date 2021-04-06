@@ -14,9 +14,10 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
 app.post('/', fetchHoliday);
 app.get('/Friends', fetchMyFriends);
-app.post('/insertFriend', insertFriend);
+app.put('/insertFriend', insertFriend);
 
 export const getDatas = functions.https.onRequest(app);
 
