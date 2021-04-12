@@ -1,10 +1,11 @@
-import * as functions from "firebase-functions";
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 import * as express from 'express';
+import * as functions from "firebase-functions";
 
+import { fetchMyFriends, insertFriend } from './MyFriends/MyFriends';
 import { fetchHoliday } from './Holiday/Holiday';
-import { fetchMyFriends,insertFriend } from './MyFriends/MyFriends';
+
 // // Start writing Firebase Functions
 // // https://firebase.google.com/docs/functions/typescript
 //
