@@ -6,7 +6,7 @@ export interface MyFriend {
 }
 
 export interface WeatherInfo {
-  idx: number
+  idx?: number
   lon: number
   lat: number
   w_main: string
@@ -19,4 +19,5 @@ export interface WeatherInfo {
   sunset: number
   country_id: number
   country_name: string
+  createdAt?: Date
 }

@@ -5,6 +5,7 @@ import * as functions from "firebase-functions";
 
 import { fetchMyFriends, insertFriend } from './MyFriends/MyFriends';
 import { fetchHoliday } from './Holiday/Holiday';
+import { Weather } from './Weather/Weather';
 
 // // Start writing Firebase Functions
 // // https://firebase.google.com/docs/functions/typescript
@@ -19,6 +20,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.post('/', fetchHoliday);
 app.get('/Friends', fetchMyFriends);
 app.put('/insertFriend', insertFriend);
+app.post('/Weather', Weather);
 
 export const getDatas = functions.https.onRequest(app);
 
