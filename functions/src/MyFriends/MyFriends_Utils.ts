@@ -2,6 +2,8 @@ import { myPool } from '../_config/db';
 import { RowDataPacket } from 'mysql2';
 import { MyFriend } from '../types/types';
 
+require('dotenv').config();
+
 export const getMyFriendsList = async (): Promise<any> => {
   try {
     const myconn = await myPool.getConnection();
@@ -60,7 +62,6 @@ export const putMyFriend = async (myFriend:MyFriend) => {
 export const changeFriendInfo = async (myFriend:MyFriend) => {
   try {
     const myconn = await myPool.getConnection();
-
     try {
       const sql = `
         update myfriends set age=${myFriend.age}, nickname='${myFriend.nickname}' where name='${myFriend.name}'
