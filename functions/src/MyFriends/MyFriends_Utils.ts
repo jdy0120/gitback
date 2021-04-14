@@ -1,4 +1,4 @@
-import { myPool } from '../_config/db';
+import { myPool } from '../../_config/db';
 import { RowDataPacket } from 'mysql2';
 import { MyFriend } from '../types/types';
 

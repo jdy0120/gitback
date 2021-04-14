@@ -1,4 +1,4 @@
-import { myPool } from '../_config/db';
+import { myPool } from '../../_config/db';
 import { RowDataPacket } from 'mysql2';
 import { WeatherInfo } from '../types/types';
 import * as moment from 'moment';
