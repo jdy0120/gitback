@@ -2,7 +2,7 @@ import fetch from 'node-fetch';
 
 const apis = {
   EndPoint:`http://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/getRestDeInfo`,
-  Enecoding:`Do%2BqAYkzRDsfuWpJN8MRsmQIXjK06hUAMvVReJqqT1MvyKvc%2Ft9eFJU19fHpZZ9j88%2BVYi9AgtBVgibkdVwhXA%3D%3D`
+  Enecoding: process.env.HOLIDAY_API_KEY
 }
 
 export const getHoliday = async(year:string) => {

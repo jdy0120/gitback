@@ -9,7 +9,7 @@ import axios from 'axios';
  */
 const API = {
   url: `http://api.openweathermap.org/data/2.5/weather?q=`,
-  key: `&appid=2bcb224c8994aa4f15decf03210cbe1d`,
+  key: process.env.WEATHER_API_KEY,
 }
 
 /**
