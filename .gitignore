@@ -65,7 +65,4 @@ node_modules/
 # dotenv environment variables file
 .env
 
-functions/_config
-
-functions/lib/**/*.js
-functions/lib/**/*.js.map
+_config/
