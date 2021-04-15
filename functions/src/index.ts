@@ -10,10 +10,6 @@ import { fetchHoliday } from './Holiday/Holiday';
 import { verify } from './Auth/VerityToken';
 import { Calendar } from './Calendar/Calendar';
 
-// // Start writing Firebase Functions
-// // https://firebase.google.com/docs/functions/typescript
-//
-
 const app = express();
 
 app.use(cors());
@@ -24,12 +20,14 @@ app.post('/', fetchHoliday);
 app.get('/Friends', fetchMyFriends);
 app.put('/insertFriend', insertFriend);
 app.post('/Weather', Weather);
+// Calendar는 token이 있어야 호출할 수 있다.
 app.post('/Calendar', verify ,Calendar);
 
 const authApp = express();
 
 authApp.use(cors());
 authApp.use(bodyParser.json());
+authApp.use(bodyParser.urlencoded({ extended: false }));
 
 const auth = require('./Auth/Auth');
 authApp.use('/auth', auth);

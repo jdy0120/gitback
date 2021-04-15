@@ -6,6 +6,9 @@ interface Props {
   pw: string
 }
 
+/**
+ * 회원 로그인해주는 함수
+ */
 export const Login = async (props:Props):Promise<RowDataPacket[]|undefined> => {
   const myconn = await myPool.getConnection();
   try {

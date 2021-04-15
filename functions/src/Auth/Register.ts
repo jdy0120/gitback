@@ -7,7 +7,9 @@ interface Props {
   name : string,
   pw : string
 }
-
+/**
+ * 회원 등록해주는 함수
+ */
 export const Register = async (props:Props): Promise<void> => {
   const myconn = await myPool.getConnection();
   try {
