@@ -4,8 +4,12 @@ import * as express from 'express';
 import * as functions from "firebase-functions";
 
 import { fetchMyFriends, insertFriend } from './MyFriends/MyFriends';
-import { fetchHoliday } from './Holiday/Holiday';
+
 import { Weather } from './Weather/Weather';
+import { fetchHoliday } from './Holiday/Holiday';
+import { verify } from './Auth/VerityToken';
+import { Calendar } from './Calendar/Calendar';
+
 // // Start writing Firebase Functions
 // // https://firebase.google.com/docs/functions/typescript
 //
@@ -20,8 +24,12 @@ app.post('/', fetchHoliday);
 app.get('/Friends', fetchMyFriends);
 app.put('/insertFriend', insertFriend);
 app.post('/Weather', Weather);
+app.post('/Calendar', verify ,Calendar);
 
 const authApp = express();
+
+authApp.use(cors());
+authApp.use(bodyParser.json());
 
 const auth = require('./Auth/Auth');
 authApp.use('/auth', auth);
