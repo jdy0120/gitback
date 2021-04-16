@@ -54,7 +54,8 @@ router.post('/login', async (req:Request,res:Response,next:NextFunction) => {
       throw new Error('not vlalid email or pw')
     }
     const token = jwt.sign({email: args.email}, jwtObj.secret);
-    res.json({loginToken: token});
+    res.cookie('loginToken',token);
+    res.end();
   } catch (err) {
     res.status(500).send('internal');
   }
