@@ -17,7 +17,8 @@ export const Login = async (props:Props):Promise<RowDataPacket[]|undefined> => {
     `;
 
     const params = [
-      props.email
+      props.email,
+      props.pw
     ];
 
     params.push();

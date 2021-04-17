@@ -25,7 +25,10 @@ app.post('/Calendar', verify ,Calendar);
 
 const authApp = express();
 
-authApp.use(cors());
+authApp.use(cors({
+  origin: "https://jdy0120.github.io",
+  credentials: true
+}));
 authApp.use(bodyParser.json());
 authApp.use(bodyParser.urlencoded({ extended: false }));
 

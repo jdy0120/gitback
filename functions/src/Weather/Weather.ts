@@ -20,13 +20,13 @@ export const Weather = async (req:Request,res:Response): Promise<void> => {
     switch (err.message) {
       // 찾을 수 없는 지역일 경우
       case 'Request failed with status code 404':
-        res.status(404).send('Request failed with status code 404');
+        res.status(404).send('Not exist area');
         break;
       // 한글로 들어온 모르는 지역일 경우
       case 'Request path contains unescaped characters':
         res.status(501).send('Request path contains unescaped characters');
       default:
-        res.status(500).send({status:500, message: 'internal error', type:'internal'});
+        res.status(500).send('internal');
         break;
     }
   }

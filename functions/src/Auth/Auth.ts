@@ -28,34 +28,46 @@ router.post('/register', async (req:Request,res:Response) => {
     pw: (await bcrypt.hash(req.body.body.pw, salt)).toString(),
     name: req.body.body.name
   }
+  console.log(args.pw);
   try {
-    Register(args);
-    res.send('no error')
+    await Register(args);
+    res.send('no error');
   } catch (err) {
-    res.status(500).send('internal')
+    if (err.message === `Error: Duplicate entry '${args.email}' for key 'email'`){
+      res.status(409).send('Duplicated email');
+    } else {
+      console.log(err.message);
+      res.status(500).send('internal');
+    }
   }
-})
+});
 
 /**
  * 로그인 api
  */
 router.post('/login', async (req:Request,res:Response,next:NextFunction) => {
-  const salt = await bcrypt.genSalt(10);
-  console.log('salt >> ',salt);
   const args = {
     email: req.body.body.email,
-    pw: (await bcrypt.hash(req.body.body.pw, salt)).toString()
+    pw: req.body.body.pw
   }
-
+  console.log(args.email);
+  console.log(args.pw);
   try {
     const DBstatus = await Login(args);
     const getDataFromDB = JSON.parse(JSON.stringify(DBstatus))[0];
     if (!getDataFromDB) {
-      throw new Error('not vlalid email or pw')
+      res.status(403).send('Not valid email');
+      res.end();
     }
-    const token = jwt.sign({email: args.email}, jwtObj.secret);
-    res.cookie('loginToken',token);
-    res.end();
+    console.log('compare >>', JSON.stringify(await bcrypt.compare(args.pw, getDataFromDB.pw)));
+    if (!await bcrypt.compare(args.pw, getDataFromDB.pw)) {
+      res.status(403).send('Not valid password');
+    } else {
+      const token = jwt.sign({email: args.email}, jwtObj.secret);
+      res.cookie('loginToken',token,{ httpOnly:true, maxAge:60000 });
+      res.cookie('name',getDataFromDB.name,{ maxAge:60000 });
+      res.end();
+    }
   } catch (err) {
     res.status(500).send('internal');
   }
