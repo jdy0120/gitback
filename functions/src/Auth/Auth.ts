@@ -50,22 +50,27 @@ router.post('/login', async (req:Request,res:Response,next:NextFunction) => {
     email: req.body.body.email,
     pw: req.body.body.pw
   }
-  console.log(args.email);
-  console.log(args.pw);
   try {
     const DBstatus = await Login(args);
     const getDataFromDB = JSON.parse(JSON.stringify(DBstatus))[0];
+    // 데이터베이스에 일치하는 email이 없을 경우
     if (!getDataFromDB) {
       res.status(403).send('Not valid email');
       res.end();
     }
+    // 데이터베이스에 저장된 pw와 클라이언트로부터 받은 pw를 비교
     console.log('compare >>', JSON.stringify(await bcrypt.compare(args.pw, getDataFromDB.pw)));
+    // 비밀번호가 틀릴경우
     if (!await bcrypt.compare(args.pw, getDataFromDB.pw)) {
       res.status(403).send('Not valid password');
+    // 비밀번호가 맞을경우
     } else {
       const token = jwt.sign({email: args.email}, jwtObj.secret);
-      res.cookie('loginToken',token,{ httpOnly:true, maxAge:60000 });
-      res.cookie('name',getDataFromDB.name,{ maxAge:60000 });
+      res.json({
+        loginToken:token,
+        name:getDataFromDB.name,
+        maxAge: 60000
+      });
       res.end();
     }
   } catch (err) {

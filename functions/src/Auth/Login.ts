@@ -30,7 +30,7 @@ export const Login = async (props:Props):Promise<RowDataPacket[]|undefined> => {
 
     return rows;
   } catch (err) {
-    console.log('오류 : Auth >> Login ', err.message)
+    console.log('오류 : Auth >> Login ', err.message);
     throw new Error(err);
   }
 }

@@ -4,6 +4,9 @@ import { MyFriend } from '../types/types';
 
 require('dotenv').config();
 
+/**
+ * 친구정보를 데이터베이스에서 불러오는 함수
+ */
 export const getMyFriendsList = async (): Promise<any> => {
   try {
     const myconn = await myPool.getConnection();
@@ -34,7 +37,10 @@ export const getMyFriendsList = async (): Promise<any> => {
   }
 };
 
-export const putMyFriend = async (myFriend:MyFriend) => {
+/**
+ * 친구 정보를 데이터베이스에 저장
+ */
+export const insertMyFriend = async (myFriend:MyFriend) => {
   try {
     const myconn = await myPool.getConnection();
 
@@ -59,6 +65,9 @@ export const putMyFriend = async (myFriend:MyFriend) => {
   }
 }
 
+/**
+ * 데이터베이스에 있는 친구 정보를 수정해주는 함수
+ */
 export const changeFriendInfo = async (myFriend:MyFriend) => {
   try {
     const myconn = await myPool.getConnection();
