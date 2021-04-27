@@ -2,10 +2,10 @@
  * MyFriends API에서 사용
  */
 export interface MyFriend {
-  idx?:number,
-  name:string, // 이름
-  age:number, // 나이
-  nickname:string // 별명
+  idx?: number,
+  name: string, // 이름
+  age: number, // 나이
+  nickname: string // 별명
 }
 
 /**
@@ -26,4 +26,19 @@ export interface WeatherInfo {
   country_id: number // 도시id
   country_name: string // 도시이름
   createdAt?: Date // 데이터베이스에 저장된 데이터생성날짜
+}
+
+export interface Day {
+  year: number,
+  month: number,
+  day?: number,
+  hours?: number,
+  minutes?: number,
+  seconds?: number,
+}
+
+export interface EventInfo {
+  title: string,
+  content: string,
+  email: string,
 }
