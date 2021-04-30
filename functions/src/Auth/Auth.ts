@@ -13,14 +13,14 @@ const router = require('express').Router();
 /**
  * router연습용 api
  */
-router.get('/view', (req:Request,res:Response) => {
+router.get('/view', (req: Request, res: Response) => {
   res.send('This is view page');
 })
 
 /**
  * 회원가입 api
  */
-router.post('/register', async (req:Request,res:Response) => {
+router.post('/register', async (req: Request, res: Response) => {
   const salt = await bcrypt.genSalt(10);
 
   const args = {
@@ -33,7 +33,7 @@ router.post('/register', async (req:Request,res:Response) => {
     await Register(args);
     res.send('no error');
   } catch (err) {
-    if (err.message === `Error: Duplicate entry '${args.email}' for key 'email'`){
+    if (err.message === `Error: Duplicate entry '${args.email}' for key 'PRIMARY'`) {
       res.status(409).send('Duplicated email');
     } else {
       console.log(err.message);
@@ -45,7 +45,7 @@ router.post('/register', async (req:Request,res:Response) => {
 /**
  * 로그인 api
  */
-router.post('/login', async (req:Request,res:Response,next:NextFunction) => {
+router.post('/login', async (req: Request, res: Response, next: NextFunction) => {
   const args = {
     email: req.body.body.email,
     pw: req.body.body.pw
@@ -63,12 +63,11 @@ router.post('/login', async (req:Request,res:Response,next:NextFunction) => {
     // 비밀번호가 틀릴경우
     if (!await bcrypt.compare(args.pw, getDataFromDB.pw)) {
       res.status(403).send('Not valid password');
-    // 비밀번호가 맞을경우
+      // 비밀번호가 맞을경우
     } else {
-      const token = jwt.sign({email: args.email}, jwtObj.secret);
+      const token = jwt.sign({ email: args.email, name: getDataFromDB.name, color: getDataFromDB.color }, jwtObj.secret);
       res.json({
-        loginToken:token,
-        name:getDataFromDB.name,
+        loginToken: token,
         maxAge: 60000
       });
       res.end();

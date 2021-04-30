@@ -37,8 +37,15 @@ export interface Day {
   seconds?: number,
 }
 
+/**
+ * 저장할 이벤트에 대한 타입
+ */
 export interface EventInfo {
-  title: string,
-  content: string,
-  email: string,
+  idx?: number; // index
+  name?: string; // 작성자 이름
+  title?: string; // 제목
+  content?: string; // 내용
+  email?: string; // 작성자 이메일 unique
+  color?: string; // 작성자에게 지정된 색
+  date?: string | undefined; // 이벤트 짜
 }

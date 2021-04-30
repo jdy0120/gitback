@@ -3,23 +3,21 @@ import { RowDataPacket } from 'mysql2';
 import { Day, EventInfo } from '../types/types';
 import * as moment from 'moment-timezone';
 
+moment().tz("Asia/Seoul").format();
+
 require('dotenv').config();
 
-export const getEvents = async (day: Day) => {
+export const getEvents = async () => {
   const myconn = await myPool.getConnection();
   try {
 
     const sql = `
-      Select users.email,events.idx,events.title,events.content,users.color,events.date 
+      Select users.email,users.name,events.idx,events.title,events.content,users.color,date_format(events.date,'%Y-%m-%d') as date, date_format(events.date,'%T') as time
       from events,users 
-      where events.email=users.email and DATE_FORMAT(events.date, '%Y-%m') = ?;
+      where events.email=users.email;
     `;
 
-    const params = [
-      moment(day.year.toString() + '-' + day.month.toString()).format('YYYY-MM')
-    ]
-
-    const query = await myconn.format(sql, params);
+    const query = await myconn.format(sql);
 
     const [rows] = await myconn.query<RowDataPacket[]>(query);
 
@@ -31,22 +29,25 @@ export const getEvents = async (day: Day) => {
   }
 }
 
-export const registEvent = async (eventInfo: EventInfo, day: Day) => {
+export const insertEvent = async (eventInfo: EventInfo) => {
   const myconn = await myPool.getConnection();
   try {
 
     const sql = `
-      Insert into events(title,content,email,date) values(?,?,?,DATE_FORMAT());
+    insert into events(title,content,email,date)
+    values(?,?,?,date_format(?, '%Y-%m-%d %T'));
     `;
 
     const params = [
       eventInfo.title,
       eventInfo.content,
       eventInfo.email,
-      day
+      eventInfo.date
     ]
 
     const query = await myconn.format(sql, params);
+
+    console.log(query);
 
     const [rows] = await myconn.query<RowDataPacket[]>(query);
 
@@ -85,19 +86,41 @@ export const updateEvent = async (eventInfo: EventInfo, day: Day) => {
   }
 }
 
-export const deleteEvent = async (eventInfo: EventInfo, day: Day) => {
+export const deleteEvent = async (eventInfo: EventInfo) => {
   const myconn = await myPool.getConnection();
   try {
 
     const sql = `
-      Delete
+      Delete from events where idx=?;
     `;
 
     const params = [
-      eventInfo.title,
-      eventInfo.content,
-      eventInfo.email,
-      day
+      eventInfo.idx
+    ]
+
+    const query = await myconn.format(sql, params);
+
+    const [rows] = await myconn.query<RowDataPacket[]>(query);
+
+    myconn.release();
+
+    return rows;
+  } catch (err) {
+    throw new Error(err);
+  }
+}
+
+export const choiceEvent = async (eventInfo: EventInfo) => {
+  const myconn = await myPool.getConnection();
+  try {
+
+    const sql = `
+      Update users set choiceEvent = ? where email = ?;
+    `;
+
+    const params = [
+      eventInfo.idx,
+      eventInfo.email
     ]
 
     const query = await myconn.format(sql, params);
