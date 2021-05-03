@@ -9,7 +9,7 @@ interface Props {
 /**
  * 회원 로그인해주는 함수
  */
-export const Login = async (props:Props):Promise<RowDataPacket[]|undefined> => {
+export const Login = async (props: Props): Promise<RowDataPacket[] | undefined> => {
   const myconn = await myPool.getConnection();
   try {
     const sql = `
@@ -18,12 +18,11 @@ export const Login = async (props:Props):Promise<RowDataPacket[]|undefined> => {
 
     const params = [
       props.email,
-      props.pw
     ];
 
     params.push();
-    const query = await myconn.format(sql,params);
-  
+    const query = await myconn.format(sql, params);
+
     const [rows] = await myconn.query<RowDataPacket[]>(query);
 
     myconn.release();

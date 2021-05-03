@@ -65,7 +65,7 @@ router.post('/login', async (req: Request, res: Response, next: NextFunction) =>
       res.status(403).send('Not valid password');
       // 비밀번호가 맞을경우
     } else {
-      const token = jwt.sign({ email: args.email, name: getDataFromDB.name, color: getDataFromDB.color }, jwtObj.secret);
+      const token = jwt.sign({ email: args.email, name: getDataFromDB.name, color: getDataFromDB.color, choiceEvent: getDataFromDB.choiceEvent }, jwtObj.secret);
       res.json({
         loginToken: token,
         maxAge: 60000
