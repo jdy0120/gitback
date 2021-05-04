@@ -11,7 +11,8 @@ const router = require('express').Router();
  */
 
 /**
- * router연습용 api
+ * 프로젝트에 쓰이지 않는 router입니다.
+ * router연습용 api 
  */
 router.get('/view', (req: Request, res: Response) => {
   res.send('This is view page');

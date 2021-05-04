@@ -7,6 +7,9 @@ moment().tz("Asia/Seoul").format();
 
 require('dotenv').config();
 
+/**
+ * events테이블에 있는 정보를 뽑아주는 함수
+ */
 export const getEvents = async () => {
   const myconn = await myPool.getConnection();
   try {
@@ -29,6 +32,9 @@ export const getEvents = async () => {
   }
 }
 
+/**
+ * events테이블에 이벤트를 등록해주는 함수
+ */
 export const insertEvent = async (eventInfo: EventInfo) => {
   const myconn = await myPool.getConnection();
   try {
@@ -59,6 +65,9 @@ export const insertEvent = async (eventInfo: EventInfo) => {
   }
 }
 
+/**
+ * events테이블의 내용을 업데이트해주는 함수
+ */
 export const updateEvent = async (eventInfo: EventInfo, day: Day) => {
   const myconn = await myPool.getConnection();
   try {
@@ -86,6 +95,9 @@ export const updateEvent = async (eventInfo: EventInfo, day: Day) => {
   }
 }
 
+/**
+ * events테이블의 내용을 삭제해주는 함수
+ */
 export const deleteEvent = async (eventInfo: EventInfo) => {
   const myconn = await myPool.getConnection();
   try {
@@ -110,6 +122,9 @@ export const deleteEvent = async (eventInfo: EventInfo) => {
   }
 }
 
+/**
+ * 유저가 선택한 이벤트를 바꿔주는 함수 Dday를 계산할 때 사용한다.
+ */
 export const choiceEvent = async (eventInfo: EventInfo) => {
   const myconn = await myPool.getConnection();
   try {

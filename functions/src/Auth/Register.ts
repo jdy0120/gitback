@@ -8,15 +8,19 @@ interface Props {
   name: string,
   pw: string
 }
-/**
- * 회원 등록해주는 함수
- */
 
+/**
+ * 회원가입을 함과 동시에 색을 부여해준다.
+ * 여기서 선택된 색은 일정을 저장할 때 누구의 일정인지 구분해준다.
+ */
 export const pickColor = (color: string[]): string => {
   const ranIndex: number = Math.floor(Math.random() * color.length);
   return color[ranIndex];
 }
 
+/**
+ * 회원 등록해주는 함수
+ */
 export const Register = async (props: Props): Promise<void> => {
   const myconn = await myPool.getConnection();
   try {

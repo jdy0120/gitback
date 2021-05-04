@@ -9,22 +9,25 @@ import * as functions from "firebase-functions";
  * 2. 날씨 정보 api에 접근할 수 있는 개인key를 숨길 수 있다.
  * 3. firebase에 배포할 경우 특정 주소에만 api호출을 허가할 수 있어 보안에 좋다.
  */
-export const Weather = async (req:Request,res:Response): Promise<void> => {
+export const Weather = async (req: Request, res: Response): Promise<void> => {
   const { location } = req.body.body;
   functions.logger.info(location);
   try {
     const locdata = await sendWeatherData(location);
     res.send(locdata);
-  } catch(err) {
-    console.log('err >> ',err.message);
+  } catch (err) {
+    console.log('err >> ', err.message);
     switch (err.message) {
+
       // 찾을 수 없는 지역일 경우
       case 'Request failed with status code 404':
         res.status(404).send('Not exist area');
         break;
+
       // 한글로 들어온 모르는 지역일 경우
       case 'Request path contains unescaped characters':
         res.status(501).send('Request path contains unescaped characters');
+
       default:
         res.status(500).send('internal');
         break;

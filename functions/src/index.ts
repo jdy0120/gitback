@@ -23,6 +23,9 @@ app.post('/Weather', Weather);
 // Calendar는 token이 있어야 호출할 수 있다.
 app.post('/Calendar', verify, getCalendarEvents);
 
+/**
+ * authApp은 로그인, 회원가입, 미들웨어 인증을 담당하는 api
+ */
 const authApp = express();
 
 authApp.use(cors({
