@@ -1,8 +1,9 @@
-import { myPool } from '../../_config/db';
+import * as moment from 'moment';
+
 import { RowDataPacket } from 'mysql2';
 import { WeatherInfo } from '../types/types';
-import * as moment from 'moment';
 import axios from 'axios';
+import { myPool } from '../../_config/db';
 
 /**
  * fetch할 주소 지역이름을 입력하면 그 지역에 대한 날씨정보를 받아올 수 있다.

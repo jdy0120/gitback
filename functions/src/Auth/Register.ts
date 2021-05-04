@@ -1,7 +1,7 @@
 import { RowDataPacket } from 'mysql2';
+import { color } from '../_assets/color';
 // import * as jwt from 'jsonwebtoken';
 import { myPool } from '../../_config/db';
-import { color } from '../_assets/color';
 
 interface Props {
   email: string,

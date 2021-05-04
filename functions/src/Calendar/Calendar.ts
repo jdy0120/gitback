@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getEvents, insertEvent, deleteEvent, choiceEvent } from './Calendar_Utils';
+import { choiceEvent, deleteEvent, getEvents, insertEvent } from './Calendar_Utils';
 
 /**
  * 프론트엔드에서 보낸 division에 따라 Calendar_Utils에 있는 함수를 다르게 적용한다.

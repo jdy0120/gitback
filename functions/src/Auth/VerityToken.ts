@@ -1,11 +1,13 @@
-import { NextFunction, Request, Response } from 'express';
 import * as jwt from 'jsonwebtoken';
+
+import { NextFunction, Request, Response } from 'express';
+
 import { jwtObj } from '../../_config/jwt-config';
 
 /**
  * 토큰을 확인해주는 함수 미들웨어에 사용
  */
-export const verify = (req:Request,res:Response,next:NextFunction) => {
+export const verify = (req: Request, res: Response, next: NextFunction) => {
   const token = req.body.headers.loginToken;
   // 토큰이 없을 경우
   if (!token) {
@@ -13,10 +15,10 @@ export const verify = (req:Request,res:Response,next:NextFunction) => {
   } else {
     // 받은 토큰이 올바를 경우
     try {
-      const verified = jwt.verify(token , jwtObj.secret);
+      const verified = jwt.verify(token, jwtObj.secret);
       req.user = verified;
       next();
-    // 받은 토큰이 올바르지 않을 경우
+      // 받은 토큰이 올바르지 않을 경우
     } catch (err) {
       res.status(400).send('Not valid Token');
     }

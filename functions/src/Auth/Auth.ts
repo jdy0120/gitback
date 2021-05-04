@@ -1,9 +1,11 @@
-import { NextFunction, Request, Response } from 'express';
-import { Register } from './Register';
 import * as bcrypt from 'bcrypt';
-import { jwtObj } from '../../_config/jwt-config';
 import * as jwt from 'jsonwebtoken';
+
+import { NextFunction, Request, Response } from 'express';
+
 import { Login } from './Login';
+import { Register } from './Register';
+import { jwtObj } from '../../_config/jwt-config';
 const router = require('express').Router();
 
 /**

@@ -1,7 +1,8 @@
+import * as functions from "firebase-functions";
+
 import { Request, Response } from 'express';
 
 import { sendWeatherData } from './Weather_Utils';
-import * as functions from "firebase-functions";
 
 /**
  * 프론트에서 직접 api를 받아 내용을 출력할 수도 있지만 굳이 api를 개발한 이유

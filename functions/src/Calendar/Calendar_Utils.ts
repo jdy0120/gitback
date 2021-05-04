@@ -1,7 +1,9 @@
-import { myPool } from '../../_config/db';
-import { RowDataPacket } from 'mysql2';
-import { Day, EventInfo } from '../types/types';
 import * as moment from 'moment-timezone';
+
+import { Day, EventInfo } from '../types/types';
+
+import { RowDataPacket } from 'mysql2';
+import { myPool } from '../../_config/db';
 
 moment().tz("Asia/Seoul").format();
 

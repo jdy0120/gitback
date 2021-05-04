@@ -7,8 +7,8 @@ import { fetchMyFriends, insertFriend } from './MyFriends/MyFriends';
 
 import { Weather } from './Weather/Weather';
 import { fetchHoliday } from './Holiday/Holiday';
-import { verify } from './Auth/VerityToken';
 import { getCalendarEvents } from './Calendar/Calendar';
+import { verify } from './Auth/VerityToken';
 
 const app = express();
 
