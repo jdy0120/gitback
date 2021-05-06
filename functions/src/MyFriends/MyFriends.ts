@@ -19,6 +19,10 @@ export const fetchMyFriends = async (req: Request, res: Response): Promise<void>
   }
 };
 
+const isExist = (rows: MyFriend[]) => {
+  return rows[0]
+}
+
 /**
  * 클라이언트로부터 받은 데이터를 토대로 데이터베이스에 친구정보가 있다면 수정, 없다면 저장을 해준다.
  */
@@ -30,7 +34,7 @@ export const insertFriend = async (req: Request, res: Response): Promise<void> =
     const exist = myFriendList.filter((element: MyFriend) => element.name === req.body.body.friendInfo.name)
     const { friendInfo } = req.body.body;
     // 클라이언트로부터 받은 친구정보가 데이터베이스에 있는경우
-    if (exist[0]) {
+    if (isExist(exist)) {
       const response = await changeFriendInfo(friendInfo);
       res.send(response);
       // 클라이언트로부터 받은 친구정보가 데이터베이스에 없는경우

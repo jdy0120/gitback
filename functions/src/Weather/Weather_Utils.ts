@@ -13,14 +13,22 @@ const API = {
   key: process.env.WEATHER_API_KEY,
 }
 
+const NotExistWeatherData = (weatherData: WeatherInfo | undefined) => {
+  return !weatherData;
+}
+
+const OldWeatherData = (weatherData: WeatherInfo | undefined) => {
+  return moment().unix() - moment(weatherData?.createdAt).unix() > 60
+}
+
 /**
  * weatherData의 종류를 식별하여 string타입으로 리턴해준다.
  */
 const responseType = (weatherData: WeatherInfo | undefined): string => {
   // 데이터베이스에 검색한 지역의 날씨정보가 저장되지 않았을 경우
-  if (!weatherData) return 'notExistData'
+  if (NotExistWeatherData(weatherData)) return 'notExistData'
   // 데이터베이스에 검색한 지역의 날씨정보가 있지만, 날씨정보가 저장한지 60초가 넘은 구형정보일 경우
-  else if (moment().unix() - moment(weatherData.createdAt).unix() > 60) return 'canNotUseData'
+  else if (OldWeatherData(weatherData)) return 'canNotUseData'
   // 데이터베이스에 저장된 날씨정보가 사용가능한 날씨정보일 경우
   else return 'canUseData'
 }

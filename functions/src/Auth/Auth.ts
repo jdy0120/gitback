@@ -12,13 +12,9 @@ const router = require('express').Router();
  * express router를 이용하여 관련된 api를 묶어 관리할 수 있다.
  */
 
-/**
- * 프로젝트에 쓰이지 않는 router입니다.
- * router연습용 api 
- */
-router.get('/view', (req: Request, res: Response) => {
-  res.send('This is view page');
-})
+const EmailDuplicated = (message: string, email: string) => {
+  return message === `Error: Duplicate entry '${email}' for key 'PRIMARY'`;
+}
 
 /**
  * 회원가입 api
@@ -36,7 +32,7 @@ router.post('/register', async (req: Request, res: Response) => {
     await Register(args);
     res.send('no error');
   } catch (err) {
-    if (err.message === `Error: Duplicate entry '${args.email}' for key 'PRIMARY'`) {
+    if (EmailDuplicated(err.message, args.email)) {
       res.status(409).send('Duplicated email');
     } else {
       console.log(err.message);
@@ -44,6 +40,15 @@ router.post('/register', async (req: Request, res: Response) => {
     }
   }
 });
+
+const NotValidEmail = (DBResult: any) => {
+  return DBResult === null;
+}
+
+const NotValidPW = async (clientPW: any, serverPW: any) => {
+  console.log('compare >>', JSON.stringify(await bcrypt.compare(clientPW, serverPW)));
+  return !await bcrypt.compare(clientPW, serverPW)
+}
 
 /**
  * 로그인 api
@@ -56,22 +61,26 @@ router.post('/login', async (req: Request, res: Response, next: NextFunction) =>
   try {
     const DBstatus = await Login(args);
     const getDataFromDB = JSON.parse(JSON.stringify(DBstatus))[0];
-    // 데이터베이스에 일치하는 email이 없을 경우
-    if (!getDataFromDB) {
+    if (NotValidEmail(getDataFromDB)) {
       res.status(403).send('Not valid email');
       res.end();
     }
-    // 데이터베이스에 저장된 pw와 클라이언트로부터 받은 pw를 비교
-    console.log('compare >>', JSON.stringify(await bcrypt.compare(args.pw, getDataFromDB.pw)));
-    // 비밀번호가 틀릴경우
-    if (!await bcrypt.compare(args.pw, getDataFromDB.pw)) {
+
+    if (NotValidPW(args.pw, getDataFromDB.pw)) {
       res.status(403).send('Not valid password');
-      // 비밀번호가 맞을경우
     } else {
-      const token = jwt.sign({ email: args.email, name: getDataFromDB.name, color: getDataFromDB.color, choiceEvent: getDataFromDB.choiceEvent }, jwtObj.secret);
+
+      const token = jwt.sign({
+        email: args.email,
+        name: getDataFromDB.name,
+        color: getDataFromDB.color,
+        choiceEvent: getDataFromDB.choiceEvent
+      }, jwtObj.secret);
+
+      const ONE_MINUTE = 60000;
       res.json({
         loginToken: token,
-        maxAge: 60000
+        maxAge: ONE_MINUTE
       });
       res.end();
     }
