@@ -42,8 +42,8 @@ export const insertEvent = async (eventInfo: EventInfo) => {
   try {
 
     const sql = `
-    insert into events(title,content,email,date)
-    values(?,?,?,date_format(?, '%Y-%m-%d %T'));
+      insert into events(title,content,email,date)
+      values(?,?,?,date_format(?, '%Y-%m-%d %T'));
     `;
 
     const params = [
