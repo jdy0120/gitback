@@ -42,12 +42,14 @@ router.post('/register', async (req: Request, res: Response) => {
 });
 
 const NotValidEmail = (DBResult: any) => {
-  return DBResult === null;
+  console.log(DBResult);
+  return DBResult === undefined;
 }
 
-const NotValidPW = async (clientPW: any, serverPW: any) => {
-  console.log('compare >>', JSON.stringify(await bcrypt.compare(clientPW, serverPW)));
-  return !await bcrypt.compare(clientPW, serverPW)
+const NotValidPW = async (clientPW: any, serverPW: any): Promise<Boolean> => {
+  const compareResult = JSON.stringify(await bcrypt.compare(clientPW, serverPW));
+  console.log('compare >>', compareResult);
+  return Promise.resolve(compareResult === 'false')
 }
 
 /**
@@ -66,7 +68,7 @@ router.post('/login', async (req: Request, res: Response, next: NextFunction) =>
       res.end();
     }
 
-    if (NotValidPW(args.pw, getDataFromDB.pw)) {
+    if (await NotValidPW(args.pw, getDataFromDB.pw)) {
       res.status(403).send('Not valid password');
     } else {
 
