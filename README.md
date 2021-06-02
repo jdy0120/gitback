@@ -30,4 +30,6 @@ Holiday, MyFriends, Weather프로젝트를 하면서 clean code의 중요성을 
 
 2021-06-01 서비스 중지
  - 구글 클라우드 플랫폼 정기지출 때문 
+
+
 [gitfront]: https://github.com/jdy0120/gitfront
